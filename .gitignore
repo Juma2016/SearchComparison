@@ -1,0 +1,15 @@
+/target/
+target/
+.DS_Store
+.idea/
+.vscode/
+*.class
+logs/
+*.log
+Src/main/resources/log4j2.xml
+*.iml
+.mvn/
+*.pdf
+*.html
+ target/classes/at/fhj/msd
+*.jar
