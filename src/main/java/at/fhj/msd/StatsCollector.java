@@ -83,7 +83,7 @@ public void generatePDFReport(String filePath) throws IOException {
                 contentStream.newLineAtOffset(100, 650);
                 contentStream.showText("Algorithmus");
                 contentStream.newLineAtOffset(110, 0);
-                contentStream.showText("Array-Größe");
+                contentStream.showText("Size");
                 contentStream.newLineAtOffset(110, 0);
                 contentStream.showText("Min (ns)");
                 contentStream.newLineAtOffset(90, 0);
