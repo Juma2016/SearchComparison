@@ -47,14 +47,14 @@ public class App {
             end = System.nanoTime();
             stats.record("InterpolationSearch(" + size + ")", end - start);
 
-           // Test QuadraticBinarySearch (on sorted array)
-            // start = System.nanoTime();
-            // for (int j = 0; j < 1000; j++) {
-            // int x = (int)(Math.random() * size) + 1;
-            // SearchAlgorithms.quadraticBinarySearch(sorted, x);
-            // }
+           //Test QuadraticBinarySearch (on sorted array)
+            start = System.nanoTime();
+            for (int j = 0; j < 1000; j++) {
+            int x = (int)(Math.random() * size) + 1;
+            SearchAlgorithms.quadraticBinarySearch(sorted, x);
+            }
 
-            
+
             end = System.nanoTime();
             stats.record("QuadraticBinarySearch(" + size + ")", end - start);
 
