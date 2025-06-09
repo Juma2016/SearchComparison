@@ -28,7 +28,7 @@ public class StatsCollector {
         long max = Collections.max(data);
         double avg = data.stream().mapToLong(Long::longValue).average().orElse(0);
 
-        System.out.printf("%s -> Min: %d ms | Max: %d ms | Avg: %.2f ms\n", algorithm, min, max, avg);
+        System.out.printf("%s -> Min: %d ns | Max: %d ns | Avg: %.2f ns\n", algorithm, min, max, avg);
     }
     /**
      * Prints the statistics for all recorded algorithms.
@@ -82,13 +82,13 @@ public void generatePDFReport(String filePath) throws IOException {
                 contentStream.beginText();
                 contentStream.newLineAtOffset(100, 650);
                 contentStream.showText("Algorithmus");
-                contentStream.newLineAtOffset(110, 0);
+                contentStream.newLineAtOffset(150, 0);
                 contentStream.showText("Size");
-                contentStream.newLineAtOffset(110, 0);
+                contentStream.newLineAtOffset(80, 0);
                 contentStream.showText("Min (ns)");
-                contentStream.newLineAtOffset(90, 0);
+                contentStream.newLineAtOffset(80, 0);
                 contentStream.showText("Max (ns)");
-                contentStream.newLineAtOffset(90, 0);
+                contentStream.newLineAtOffset(80, 0);
                 contentStream.showText("Avg (ns)");
                 contentStream.endText();
 

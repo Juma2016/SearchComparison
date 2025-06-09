@@ -28,7 +28,8 @@ public class App {
             }
 
             long end = System.nanoTime();
-            stats.record("LinearSearch(" + size + ")", end - start);
+
+            stats.record("LinearSearch(" + size + ")", (end - start)/1000);
 
             // Test BinarySearch (on sorted array)
             start = System.nanoTime();
@@ -38,7 +39,7 @@ public class App {
             }
 
             end = System.nanoTime();
-            stats.record("BinarySearch(" + size + ")", end - start);
+            stats.record("BinarySearch(" + size + ")", (end - start)/1000);
 
            // Test InterpolationSearch (on sorted array) 
             start = System.nanoTime();
@@ -48,7 +49,7 @@ public class App {
 }
             // Ensure that the interpolation search does not throw an exception
             end = System.nanoTime();
-            stats.record("InterpolationSearch(" + size + ")", end - start);
+            stats.record("InterpolationSearch(" + size + ")", (end - start)/1000);
 
            //Test QuadraticBinarySearch (on sorted array)
             start = System.nanoTime();
@@ -59,7 +60,7 @@ public class App {
 
 
             end = System.nanoTime();
-            stats.record("QuadraticBinarySearch(" + size + ")", end - start);
+            stats.record("QuadraticBinarySearch(" + size + ")", (end - start)/1000);
 
             // Print statistics for each algorithm
             stats.printStatistics("LinearSearch(" + size + ")");

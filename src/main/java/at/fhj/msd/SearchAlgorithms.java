@@ -68,35 +68,74 @@ public class SearchAlgorithms {
     }
     return -1;
 }
+
+/**
+     * Quadratic Binary Search - A search algorithm that combines interpolation with sqrt(n) steps
+     * Works on sorted arrays, similar to binary search but with different partitioning
+     * 
+     * @param a the sorted array to search in
+     * @param x the value to search for
+     * @return index of the found element, or -1 if not found
+     */
     
-    public static int quadraticBinarySearch(int[] a, int x) {
-    int left = 0, right = a.length - 1;
-
-    // To prevent endless loops
-    int maxTries = 1000; 
-
-    while (left <= right && maxTries-- > 0) {
-        int range = right - left;
-        int denominator = (a.length * a.length) / 4; // 4 is a constant to avoid division by zero and to scale the range
-
-        if (denominator == 0) denominator = 1; // if denominator is zero, we set it to 1 (selten case)
-
-        int mid = left + (range * range) / denominator;
-
-        // If mid is out of bounds, we use normal arithmetic.
-        // This can happen if the array is small or if the range is very small.
-        // if rechnerischer Mittelwert außerhalb des Bereichs liegt, dann setze mid auf den Mittelwert(binary search)   
-
-        if (mid < left || mid > right) {
-            mid = left + (right - left) / 2;
-        }
-        // Check if the middle element is the target
-
-        if (a[mid] == x) return mid;
-        if (a[mid] < x) left = mid + 1;
-        else right = mid - 1;
+       public static int quadraticBinarySearch(int[] a, int x) {
+        return quadBinarySearchRecursive(a, 0, a.length - 1, x, 1000);
     }
+
     
-    return -1; 
-}
-}
+      private static int quadBinarySearchRecursive(int[] A, int from, int to, int x, int remainingTries) {
+
+           if (remainingTries <= 0 || from < 0 || to >= A.length || from > to) {
+        return -1;
+    }
+        int n = to - from + 1;
+        
+        if (A[from] < A[to]) {
+            // Interpolation formula to estimate position
+            int denominator = A [to] - A[from];
+            int t;
+            if (denominator==0){
+                t=(from+to)/2;
+            }else{
+            t = from + (int)Math.floor((to - from) * ((double)(x - A[from])/denominator)); 
+            }
+             // Ensure t stays within bounds
+            t = Math.max(from, Math.min(to, t));
+        
+            if (x == A[t]) {
+                return t;
+            } else if (x < A[t]) {
+                // Jump back in steps of sqrt(n) until we find a value <= x
+                int step = (int)Math.floor(Math.sqrt(n));
+                
+                int newT = t;
+            while (newT >= from && x < A[newT] && remainingTries-- > 0) {
+                newT -= step;
+            }
+            // Don't go below from    
+            newT = Math.max(from, newT);  
+                return quadBinarySearchRecursive(A, newT, Math.min(t + step - 1,to), x,remainingTries );
+            } else {
+                // Jump forward in steps of sqrt(n) until we find a value >= x
+                int step = (int)Math.floor(Math.sqrt(n));
+               int newT = t; 
+                while (newT <= to && x > A[newT] && remainingTries -->0) {
+                    newT += step;
+                }
+                newT = Math.min(to, newT);  // Don't go above to
+                return quadBinarySearchRecursive(A, Math.max(t - step + 1, from),newT, x,remainingTries);
+            }
+        }
+            // All elements in the range are equal
+            if (x == A[from]) {
+                return from;
+            } else {
+                return -1;
+            }
+        }
+    }
+
+
+
+
+    
