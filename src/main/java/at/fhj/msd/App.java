@@ -20,47 +20,51 @@ public class App {
             System.out.println("\nTesting array of size: " + size);
 
             // Test LinearSearch (on unsorted array)
-            long start = System.nanoTime();
-            // Perform 1000 searches for random elements in the unsorted array
+            long totalTime = 0;
             for (int j = 0; j < 1000; j++) {
             int x = (int)(Math.random() * size) + 1;
+            long start = System.nanoTime();
             SearchAlgorithms.linearSearch(unsorted, x);
+            long end = System.nanoTime();
+            totalTime += (end-start);
             }
 
-            long end = System.nanoTime();
-
-            stats.record("LinearSearch(" + size + ")", (end - start)/1000);
+            stats.record("LinearSearch(" + size + ")", (totalTime/1000));
 
             // Test BinarySearch (on sorted array)
-            start = System.nanoTime();
+           totalTime = 0;
             for (int j = 0; j < 1000; j++) {
             int x = (int)(Math.random() * size) + 1;
-             SearchAlgorithms.binarySearch(sorted, x);
+            long start = System.nanoTime();
+            SearchAlgorithms.binarySearch(sorted, x);
+            long end = System.nanoTime();
+            totalTime += (end-start);
             }
-
-            end = System.nanoTime();
-            stats.record("BinarySearch(" + size + ")", (end - start)/1000);
+  
+            stats.record("BinarySearch(" + size + ")", totalTime/1000);
 
            // Test InterpolationSearch (on sorted array) 
-            start = System.nanoTime();
             for (int j = 0; j < 1000; j++) {
             int x = (int)(Math.random() * size) + 1;
+            long start = System.nanoTime();
             SearchAlgorithms.interpolationSearch(sorted, x);
-}
-            // Ensure that the interpolation search does not throw an exception
-            end = System.nanoTime();
-            stats.record("InterpolationSearch(" + size + ")", (end - start)/1000);
+            long end = System.nanoTime();
+            totalTime += (end-start);       
+            }
+           
+            stats.record("InterpolationSearch(" + size + ")", totalTime/1000);
 
            //Test QuadraticBinarySearch (on sorted array)
-            start = System.nanoTime();
+           
             for (int j = 0; j < 1000; j++) {
             int x = (int)(Math.random() * size) + 1;
+            long start = System.nanoTime();
             SearchAlgorithms.quadraticBinarySearch(sorted, x);
+            long end = System.nanoTime(); 
+            totalTime += (end-start);    
             }
-
-
-            end = System.nanoTime();
-            stats.record("QuadraticBinarySearch(" + size + ")", (end - start)/1000);
+           
+            stats.record("QuadraticBinarySearch(" + size + ")", totalTime/1000);
 
             // Print statistics for each algorithm
             stats.printStatistics("LinearSearch(" + size + ")");
