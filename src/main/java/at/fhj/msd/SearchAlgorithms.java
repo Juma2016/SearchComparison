@@ -78,54 +78,50 @@ public class SearchAlgorithms {
      * @return index of the found element, or -1 if not found
      */
     
-       public static int quadraticBinarySearch(int[] a, int x) {
-        return quadBinarySearchRecursive(a, 0, a.length - 1, x, 1000);
-    }
-
+      public static int quadraticBinarySearch(int[] A, int x) {
+    int from = 0;
+    int to = A.length - 1;
+    int remainingTries = 1000;
     
-      private static int quadBinarySearchRecursive(int[] A, int from, int to, int x, int remainingTries) {
-
-           if (remainingTries <= 0 || from < 0 || to >= A.length || from > to) {
-        return -1;
-    }
+    while (remainingTries > 0 && from >= 0 && to < A.length && from <= to) {
         int n = to - from + 1;
         
         if (A[from] < A[to]) {
             // Interpolation formula to estimate position
-            int denominator = A [to] - A[from];
+            int denominator = A[to] - A[from];
             int t;
-            if (denominator==0){
-                t=(from+to)/2;
-            }else{
-            t = from + (int)Math.floor((to - from) * ((double)(x - A[from])/denominator)); 
+            if (denominator == 0) {
+                t = (from + to) / 2;
+            } else {
+                t = from + (int)Math.floor((to - from) * ((double)(x - A[from]) / denominator)); 
             }
-             // Ensure t stays within bounds
+            // Ensure t stays within bounds
             t = Math.max(from, Math.min(to, t));
-        
+            
             if (x == A[t]) {
                 return t;
             } else if (x < A[t]) {
-                // Jump back in steps of sqrt(n) until we find a value <= x
+                // Jump back in steps of sqrt(n)
                 int step = (int)Math.floor(Math.sqrt(n));
-                
                 int newT = t;
-            while (newT >= from && x < A[newT] && remainingTries-- > 0) {
-                newT -= step;
-            }
-            // Don't go below from    
-            newT = Math.max(from, newT);  
-                return quadBinarySearchRecursive(A, newT, Math.min(t + step - 1,to), x,remainingTries );
+                while (newT >= from && x < A[newT] && remainingTries-- > 0) {
+                    newT -= step;
+                }
+                newT = Math.max(from, newT);
+                to = Math.min(t + step - 1, to);
+                from = newT;
             } else {
-                // Jump forward in steps of sqrt(n) until we find a value >= x
+                // Jump forward in steps of sqrt(n)
                 int step = (int)Math.floor(Math.sqrt(n));
-               int newT = t; 
-                while (newT <= to && x > A[newT] && remainingTries -->0) {
+                int newT = t;
+                while (newT <= to && x > A[newT] && remainingTries-- > 0) {
                     newT += step;
                 }
-                newT = Math.min(to, newT);  // Don't go above to
-                return quadBinarySearchRecursive(A, Math.max(t - step + 1, from),newT, x,remainingTries);
+                newT = Math.min(to, newT);
+                from = Math.max(t - step + 1, from);
+                to = newT;
             }
-        }
+        } else {
             // All elements in the range are equal
             if (x == A[from]) {
                 return from;
@@ -134,6 +130,10 @@ public class SearchAlgorithms {
             }
         }
     }
+    return -1;
+    
+        }
+}
 
 
 
